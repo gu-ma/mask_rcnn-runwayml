@@ -1,6 +1,5 @@
 python: 3.7
 cuda: 10
-framework: tensorflow
 entrypoint: python runway_model.py
 spec:
   gpu: True
