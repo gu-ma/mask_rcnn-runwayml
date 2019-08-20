@@ -3,7 +3,7 @@ from mrcnn.config import Config
 from mrcnn import model as modellib, utils
 
 import runway
-from runway.data_types import image, file
+from runway.data_types import image, file, number
 
 class PastaConfig(Config):
     NAME = "pasta"
@@ -16,11 +16,16 @@ class PastaConfig(Config):
 config = PastaConfig()
 config.display()
 
+setup_options = {
+    'checkpoint': file(extension='.h5'),
+    'min_confidence': number(min=0, max=1, step=.1, default=.7)
+}
 
-@runway.setup(options={'weights': file(extension='.h5')})
+@runway.setup(options=setup_options)
 def setup(opts):
+    config.DETECTION_MIN_CONFIDENCE = opts['min_confidence']
     model = modellib.MaskRCNN(mode="inference", config=config, model_dir='logs')
-    model.load_weights(opts['weights'], by_name=True)
+    model.load_weights(opts['checkpoint'], by_name=True)
     return model
 
 
@@ -40,4 +45,4 @@ def detect(model, inputs):
 
 
 if __name__ == '__main__':
-    runway.run()
+    runway.run(model_options={'checkpoint': './checkpoints/mask_rcnn_pasta_0030.h5'})

@@ -6,6 +6,6 @@ spec:
   cpu: False
 files:
   ignore:
-    - weights/*
+    - checkpoints/*
 build_steps:
   - pip install -r requirements.txt
