@@ -1,4 +1,4 @@
-python: 3.7
+python: 3.6
 cuda: 10
 entrypoint: python runway_model.py
 spec:

@@ -1,9 +1,7 @@
+import runway
 import numpy as np
 from mrcnn.config import Config
 from mrcnn import model as modellib, utils
-
-import runway
-from runway.data_types import image, file, number
 
 class PastaConfig(Config):
     NAME = "pasta"
@@ -14,11 +12,11 @@ class PastaConfig(Config):
     DETECTION_MIN_CONFIDENCE = 0.7
 
 config = PastaConfig()
-config.display()
+# config.display()
 
 setup_options = {
-    'checkpoint': file(extension='.h5'),
-    'min_confidence': number(min=0, max=1, step=.1, default=.7)
+    'checkpoint': runway.file(extension='.h5'),
+    'min_confidence': runway.number(min=0, max=1, step=.1, default=.7),
 }
 
 @runway.setup(options=setup_options)
@@ -29,7 +27,7 @@ def setup(opts):
     return model
 
 
-@runway.command('detect', inputs={'image': image}, outputs={'image': image})
+@runway.command('detect', inputs={'image': runway.image}, outputs={'image': runway.image})
 def detect(model, inputs):
     img = inputs['image']
     img = np.array(img)
