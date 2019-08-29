@@ -3,16 +3,15 @@ import numpy as np
 from mrcnn.config import Config
 from mrcnn import model as modellib, utils
 
-class PastaConfig(Config):
-    NAME = "pasta"
+class BaseConfig(Config):
+    NAME = "baseConfig"
     GPU_COUNT = 1
     IMAGES_PER_GPU = 1
     NUM_CLASSES = 1 + 1  # Background + pasta
     STEPS_PER_EPOCH = 100
     DETECTION_MIN_CONFIDENCE = 0.7
 
-config = PastaConfig()
-# config.display()
+config = BaseConfig()
 
 setup_options = {
     'checkpoint': runway.file(extension='.h5'),
@@ -43,4 +42,5 @@ def detect(model, inputs):
 
 
 if __name__ == '__main__':
+    # runway.run()
     runway.run(model_options={'checkpoint': './checkpoints/mask_rcnn_pasta_0030.h5'})
